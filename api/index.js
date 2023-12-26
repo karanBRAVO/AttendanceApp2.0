@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { connectToDatabase } from "./src/connection/db.conn.js";
-import testRouter from "./src/routes/test.route.js";
+import adminRouter from "./src/routes/admin.route.js";
+import orgsRouter from "./src/routes/orgs.router.js";
 
 // configuring dotenv
 dotenv.config();
@@ -23,7 +24,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
-app.use("/api", testRouter);
+app.use("/api", adminRouter);
+app.use("/api", orgsRouter);
 
 // starting express server
 app.listen(PORT, (err) => {
