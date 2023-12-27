@@ -1,4 +1,4 @@
-import { admingModel } from "../models/admin.model.js";
+import { adminModel } from "../models/admin.model.js";
 import { createHash, comparePassword } from "../utils/passwords.js";
 import { getToken } from "../utils/jwtTasks.js";
 
@@ -12,7 +12,7 @@ export const adminSignup = async (req, res, next) => {
     }
 
     // checking user existance
-    const admin = await admingModel.findOne({ name, email, phone });
+    const admin = await adminModel.findOne({ name, email, phone });
     if (admin) {
       const err = new Error(`User already exists`);
       throw err;
@@ -20,7 +20,7 @@ export const adminSignup = async (req, res, next) => {
 
     // adding the admin to database
     const hashedPassword = createHash(password);
-    const newAdmin = new admingModel({
+    const newAdmin = new adminModel({
       name,
       email,
       phone,
@@ -44,7 +44,7 @@ export const adminLogin = async (req, res, next) => {
     }
 
     // checking user existance
-    const admin = await admingModel.findOne({ name, email, phone });
+    const admin = await adminModel.findOne({ name, email, phone });
     if (!admin) {
       const err = new Error(`User not found`);
       throw err;

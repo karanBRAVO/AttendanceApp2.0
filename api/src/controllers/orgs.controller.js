@@ -1,4 +1,4 @@
-import { admingModel } from "../models/admin.model.js";
+import { adminModel } from "../models/admin.model.js";
 import { orgsModel } from "../models/orgs.model.js";
 
 export const addNewOrganization = async (req, res, next) => {
@@ -11,20 +11,26 @@ export const addNewOrganization = async (req, res, next) => {
     }
 
     // finding the user in the database
-    const admin = await admingModel.findOne({ _id: userId });
+    const admin = await adminModel.findOne({ _id: userId });
     if (!admin) {
       const err = new Error(`Admin registration is required.`);
       throw err;
     }
 
     // getting the organization details
-    let { name, address, logo } = req.body;
+    let { name, address, logo, subjects, classes } = req.body;
     if (!name || !address) {
       const err = new Error(`Invalid details for organization.`);
       throw err;
     }
     if (!logo) {
       logo = undefined;
+    }
+    if (!subjects) {
+      subjects = undefined;
+    }
+    if (!classes) {
+      classes = undefined;
     }
 
     // checking the existance of the organization
@@ -40,6 +46,8 @@ export const addNewOrganization = async (req, res, next) => {
       name,
       address,
       logo,
+      subjects,
+      classes,
     });
     await newOrg.save();
 
@@ -65,6 +73,8 @@ export const getAllOrganizations = async (req, res, next) => {
         orgName: org.name,
         address: org.address,
         logo: org.logo,
+        subjects: org.subjects,
+        classes: org.classes,
       });
     }
 

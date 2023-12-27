@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import { connectToDatabase } from "./src/connection/db.conn.js";
 import adminRouter from "./src/routes/admin.route.js";
 import orgsRouter from "./src/routes/orgs.router.js";
+import teacherRouter from "./src/routes/teacher.route.js";
+import invitationRouter from "./src/routes/invitation.route.js";
 
 // configuring dotenv
 dotenv.config();
@@ -26,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 app.use("/api", adminRouter);
 app.use("/api", orgsRouter);
+app.use("/api", teacherRouter);
+app.use("/api", invitationRouter);
 
 // starting express server
 app.listen(PORT, (err) => {
