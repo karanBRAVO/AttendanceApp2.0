@@ -3,6 +3,7 @@ import { teacherModel } from "../models/teacher.model.js";
 import { tokenModel } from "../models/token.model.js";
 import { getToken } from "../utils/jwtTasks.js";
 import { comparePassword, createHash } from "../utils/passwords.js";
+import { getUniqueId } from "../utils/idGenerator.js";
 
 export const registerTeacher = async (req, res, next) => {
   try {
@@ -67,6 +68,9 @@ export const registerTeacher = async (req, res, next) => {
     // generating the password hash
     let hashedPassword = createHash(password);
 
+    // generating the unique identifier
+    const uniqueId = getUniqueId(`${name}${email}${phone}`, password);
+
     // adding the teacher to the database
     const newTeacher = new teacherModel({
       orgId: orgs._id,
@@ -76,6 +80,7 @@ export const registerTeacher = async (req, res, next) => {
       phone,
       password: hashedPassword,
       subjectName,
+      uniqueId,
     });
     await newTeacher.save();
 

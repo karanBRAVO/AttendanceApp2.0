@@ -36,6 +36,12 @@ const studentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    uniqueId: {
+      // identifier given by the organization
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );

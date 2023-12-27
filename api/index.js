@@ -8,6 +8,7 @@ import orgsRouter from "./src/routes/orgs.router.js";
 import teacherRouter from "./src/routes/teacher.route.js";
 import invitationRouter from "./src/routes/invitation.route.js";
 import studentRouter from "./src/routes/student.route.js";
+import attendaceRouter from "./src/routes/attendance.route.js";
 
 // configuring dotenv
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api", orgsRouter);
 app.use("/api", teacherRouter);
 app.use("/api", invitationRouter);
 app.use("/api", studentRouter);
+app.use("/api", attendaceRouter);
 
 // starting express server
 app.listen(PORT, (err) => {

@@ -37,6 +37,12 @@ const teacherSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    uniqueId: {
+      // identifier given by the organization
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
