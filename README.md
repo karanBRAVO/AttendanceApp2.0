@@ -74,6 +74,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Thank you for choosing the Attendance App 2.0! We hope it serves you well. If you encounter any issues or have suggestions for improvements, please feel free to [create an issue](https://github.com/your-username/attendance-app/issues).
+Thank you for choosing the Attendance App 2.0! We hope it serves you well. If you encounter any issues or have suggestions for improvements, please feel free to [create an issue](https://github.com/karanBRAVO/AttendanceApp2.0/issues).
 
 Happy attendance tracking!
