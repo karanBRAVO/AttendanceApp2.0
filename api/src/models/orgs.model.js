@@ -24,6 +24,16 @@ const orgsSchema = new mongoose.Schema(
         "https://img.freepik.com/vecteurs-premium/creation-logo-communautaire-couleur_766765-434.jpg?w=360",
       required: false,
     },
+    subjects: {
+      type: Array,
+      default: [],
+      required: true,
+    },
+    classes: {
+      type: Array,
+      default: [],
+      required: true,
+    },
   },
   { timestamps: true }
 );
