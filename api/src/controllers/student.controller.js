@@ -1,10 +1,10 @@
 import { orgsModel } from "../models/orgs.model.js";
-import { teacherModel } from "../models/teacher.model.js";
+import { studentModel } from "../models/student.model.js";
 import { tokenModel } from "../models/token.model.js";
 import { getToken } from "../utils/jwtTasks.js";
-import { comparePassword, createHash } from "../utils/passwords.js";
+import { createHash, comparePassword } from "../utils/passwords.js";
 
-export const registerTeacher = async (req, res, next) => {
+export const registerStudent = async (req, res, next) => {
   try {
     // getting the invitation token
     const token = req.params.token;
@@ -21,15 +21,14 @@ export const registerTeacher = async (req, res, next) => {
     }
 
     // getting the details from the request
-    const { name, identityProof, email, phone, password, subjectName } =
-      req.body;
+    const { name, identityProof, email, phone, password, className } = req.body;
     if (
       !name ||
       !identityProof ||
       !email ||
       !phone ||
       !password ||
-      !subjectName
+      !className
     ) {
       const err = new Error(`Invalid details.`);
       throw err;
@@ -50,16 +49,16 @@ export const registerTeacher = async (req, res, next) => {
       throw err;
     }
 
-    // finding the teacher in database
-    const teacher = await teacherModel.findOne({
+    // finding the student in database
+    const student = await studentModel.findOne({
       orgId: orgs._id,
       name,
       identityProof,
       email,
       phone,
-      subjectName,
+      class: className,
     });
-    if (teacher) {
+    if (student) {
       const err = new Error(`Registration already exists.`);
       throw err;
     }
@@ -67,17 +66,17 @@ export const registerTeacher = async (req, res, next) => {
     // generating the password hash
     let hashedPassword = createHash(password);
 
-    // adding the teacher to the database
-    const newTeacher = new teacherModel({
+    // adding the student to the database
+    const newStudent = new studentModel({
       orgId: orgs._id,
       name,
       identityProof,
       email,
       phone,
       password: hashedPassword,
-      subjectName,
+      class: className,
     });
-    await newTeacher.save();
+    await newStudent.save();
 
     res.json({ success: true, message: "Registration successful." });
   } catch (err) {
@@ -85,7 +84,7 @@ export const registerTeacher = async (req, res, next) => {
   }
 };
 
-export const loginTeacher = async (req, res, next) => {
+export const loginStudent = async (req, res, next) => {
   try {
     // getting the details from the request
     const { name, identityProof, email, phone, password } = req.body;
@@ -94,26 +93,26 @@ export const loginTeacher = async (req, res, next) => {
       throw err;
     }
 
-    // finding the teacher in database
-    const teacher = await teacherModel.findOne({
+    // finding the student in database
+    const student = await studentModel.findOne({
       name,
       identityProof,
       email,
       phone,
     });
-    if (!teacher) {
+    if (!student) {
       const err = new Error(`Registration not found.`);
       throw err;
     }
 
     // matching the passwords
-    if (!comparePassword(teacher.password, password)) {
+    if (!comparePassword(student.password, password)) {
       const err = new Error(`Password mismatch.`);
       throw err;
     }
 
     // creating a new token
-    const token = getToken(teacher._id);
+    const token = getToken(student._id);
 
     res.json({ success: true, message: "Logged in.", token });
   } catch (err) {
